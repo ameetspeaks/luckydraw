@@ -15,6 +15,8 @@ import {
   type Winner,
   type InsertWinner,
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   // User operations - mandatory for Replit Auth
@@ -47,239 +49,230 @@ export interface IStorage {
   getRecentWinners(limit?: number): Promise<(Winner & { user: User; draw: Draw })[]>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User> = new Map();
-  private draws: Map<number, Draw> = new Map();
-  private participations: Map<number, Participation> = new Map();
-  private transactions: Map<number, Transaction> = new Map();
-  private winners: Map<number, Winner> = new Map();
-  
-  private drawIdCounter = 1;
-  private participationIdCounter = 1;
-  private transactionIdCounter = 1;
-  private winnerIdCounter = 1;
-
-  constructor() {
-    // Initialize with sample draws
-    this.initializeSampleData();
-  }
-
-  private initializeSampleData() {
-    // Sample active draws
-    const now = new Date();
-    const todayEvening = new Date(now);
-    todayEvening.setHours(18, 0, 0, 0);
-    
-    const weekendDraw = new Date(now);
-    weekendDraw.setDate(now.getDate() + (6 - now.getDay())); // Next Saturday
-    weekendDraw.setHours(20, 0, 0, 0);
-
-    this.draws.set(1, {
-      id: 1,
-      title: "Today's Mega Draw",
-      description: "iPhone 15 Pro Max",
-      prizeAmount: "25000",
-      entryFee: 50,
-      maxParticipants: 2000,
-      currentParticipants: 1247,
-      drawTime: todayEvening,
-      isActive: true,
-      isCompleted: false,
-      winnerId: null,
-      prizeImageUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200",
-      createdAt: new Date(),
-    });
-
-    this.draws.set(2, {
-      id: 2,
-      title: "Evening Special",
-      description: "Cash Prize",
-      prizeAmount: "50000",
-      entryFee: 100,
-      maxParticipants: 1000,
-      currentParticipants: 652,
-      drawTime: todayEvening,
-      isActive: true,
-      isCompleted: false,
-      winnerId: null,
-      prizeImageUrl: null,
-      createdAt: new Date(),
-    });
-
-    this.draws.set(3, {
-      id: 3,
-      title: "Weekend Jackpot",
-      description: "Mega Cash Prize",
-      prizeAmount: "100000",
-      entryFee: 200,
-      maxParticipants: 500,
-      currentParticipants: 127,
-      drawTime: weekendDraw,
-      isActive: true,
-      isCompleted: false,
-      winnerId: null,
-      prizeImageUrl: null,
-      createdAt: new Date(),
-    });
-  }
-
-  // User operations
+export class DatabaseStorage implements IStorage {
+  // User operations - mandatory for Replit Auth
   async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
-    const existingUser = this.users.get(userData.id);
-    const user: User = {
-      ...userData,
-      coinBalance: existingUser?.coinBalance ?? 100, // Welcome bonus
-      totalParticipations: existingUser?.totalParticipations ?? 0,
-      totalWins: existingUser?.totalWins ?? 0,
-      totalEarnings: existingUser?.totalEarnings ?? "0",
-      currentStreak: existingUser?.currentStreak ?? 0,
-      lastCheckIn: existingUser?.lastCheckIn ?? null,
-      isVip: existingUser?.isVip ?? false,
-      createdAt: existingUser?.createdAt ?? new Date(),
-      updatedAt: new Date(),
-    };
-    this.users.set(userData.id, user);
+    const [user] = await db
+      .insert(users)
+      .values({
+        ...userData,
+        email: userData.email || null,
+        firstName: userData.firstName || null,
+        lastName: userData.lastName || null,
+        profileImageUrl: userData.profileImageUrl || null,
+        coinBalance: userData.coinBalance || 100, // Welcome bonus
+        totalParticipations: userData.totalParticipations || 0,
+        totalWins: userData.totalWins || 0,
+        totalEarnings: userData.totalEarnings || "0",
+        currentStreak: userData.currentStreak || 0,
+        lastCheckIn: userData.lastCheckIn || null,
+        isVip: userData.isVip || false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          email: userData.email || null,
+          firstName: userData.firstName || null,
+          lastName: userData.lastName || null,
+          profileImageUrl: userData.profileImageUrl || null,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
     return user;
   }
 
+  // User coin operations
   async updateUserCoins(userId: string, amount: number): Promise<User> {
-    const user = this.users.get(userId);
-    if (!user) throw new Error("User not found");
+    // Get current user first
+    const currentUser = await this.getUser(userId);
+    if (!currentUser) throw new Error("User not found");
+
+    const newBalance = Math.max(0, currentUser.coinBalance + amount);
     
-    user.coinBalance = Math.max(0, user.coinBalance + amount);
-    user.updatedAt = new Date();
-    this.users.set(userId, user);
+    const [user] = await db
+      .update(users)
+      .set({ 
+        coinBalance: newBalance,
+        updatedAt: new Date() 
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    
+    if (!user) throw new Error("User not found");
     return user;
   }
 
   async updateUserStats(userId: string, stats: Partial<Pick<User, 'totalParticipations' | 'totalWins' | 'totalEarnings'>>): Promise<User> {
-    const user = this.users.get(userId);
-    if (!user) throw new Error("User not found");
+    const [user] = await db
+      .update(users)
+      .set({ 
+        ...stats,
+        updatedAt: new Date() 
+      })
+      .where(eq(users.id, userId))
+      .returning();
     
-    Object.assign(user, stats);
-    user.updatedAt = new Date();
-    this.users.set(userId, user);
+    if (!user) throw new Error("User not found");
     return user;
   }
 
   async updateUserStreak(userId: string, streak: number): Promise<User> {
-    const user = this.users.get(userId);
-    if (!user) throw new Error("User not found");
+    const [user] = await db
+      .update(users)
+      .set({ 
+        currentStreak: streak,
+        lastCheckIn: new Date(),
+        updatedAt: new Date() 
+      })
+      .where(eq(users.id, userId))
+      .returning();
     
-    user.currentStreak = streak;
-    user.lastCheckIn = new Date();
-    user.updatedAt = new Date();
-    this.users.set(userId, user);
+    if (!user) throw new Error("User not found");
     return user;
   }
 
   // Draw operations
   async createDraw(drawData: InsertDraw): Promise<Draw> {
-    const draw: Draw = {
-      id: this.drawIdCounter++,
-      ...drawData,
-      currentParticipants: 0,
-      isCompleted: false,
-      winnerId: null,
-      createdAt: new Date(),
-    };
-    this.draws.set(draw.id, draw);
+    const [draw] = await db
+      .insert(draws)
+      .values({
+        ...drawData,
+        description: drawData.description || null,
+        maxParticipants: drawData.maxParticipants || null,
+        prizeImageUrl: drawData.prizeImageUrl || null,
+        currentParticipants: 0,
+        isCompleted: false,
+        winnerId: null,
+        createdAt: new Date(),
+      })
+      .returning();
     return draw;
   }
 
   async getAllActiveDraws(): Promise<Draw[]> {
-    return Array.from(this.draws.values()).filter(draw => draw.isActive && !draw.isCompleted);
+    return await db
+      .select()
+      .from(draws)
+      .where(eq(draws.isActive, true));
   }
 
   async getDrawById(id: number): Promise<Draw | undefined> {
-    return this.draws.get(id);
+    const [draw] = await db.select().from(draws).where(eq(draws.id, id));
+    return draw || undefined;
   }
 
   async updateDrawParticipants(drawId: number, count: number): Promise<Draw> {
-    const draw = this.draws.get(drawId);
-    if (!draw) throw new Error("Draw not found");
+    const [draw] = await db
+      .update(draws)
+      .set({ currentParticipants: count })
+      .where(eq(draws.id, drawId))
+      .returning();
     
-    draw.currentParticipants = count;
-    this.draws.set(drawId, draw);
+    if (!draw) throw new Error("Draw not found");
     return draw;
   }
 
   async completeDraw(drawId: number, winnerId: string): Promise<Draw> {
-    const draw = this.draws.get(drawId);
-    if (!draw) throw new Error("Draw not found");
+    const [draw] = await db
+      .update(draws)
+      .set({ 
+        isCompleted: true,
+        winnerId: winnerId 
+      })
+      .where(eq(draws.id, drawId))
+      .returning();
     
-    draw.isCompleted = true;
-    draw.winnerId = winnerId;
-    this.draws.set(drawId, draw);
+    if (!draw) throw new Error("Draw not found");
     return draw;
   }
 
   // Participation operations
   async createParticipation(participationData: InsertParticipation): Promise<Participation> {
-    const participation: Participation = {
-      id: this.participationIdCounter++,
-      ...participationData,
-      participatedAt: new Date(),
-    };
-    this.participations.set(participation.id, participation);
+    const [participation] = await db
+      .insert(participations)
+      .values({
+        ...participationData,
+        participatedAt: new Date(),
+      })
+      .returning();
     return participation;
   }
 
   async getUserParticipations(userId: string): Promise<Participation[]> {
-    return Array.from(this.participations.values()).filter(p => p.userId === userId);
+    return await db
+      .select()
+      .from(participations)
+      .where(eq(participations.userId, userId));
   }
 
   async getDrawParticipations(drawId: number): Promise<Participation[]> {
-    return Array.from(this.participations.values()).filter(p => p.drawId === drawId);
+    return await db
+      .select()
+      .from(participations)
+      .where(eq(participations.drawId, drawId));
   }
 
   // Transaction operations
   async createTransaction(transactionData: InsertTransaction): Promise<Transaction> {
-    const transaction: Transaction = {
-      id: this.transactionIdCounter++,
-      ...transactionData,
-      createdAt: new Date(),
-    };
-    this.transactions.set(transaction.id, transaction);
+    const [transaction] = await db
+      .insert(transactions)
+      .values({
+        ...transactionData,
+        relatedDrawId: transactionData.relatedDrawId || null,
+        createdAt: new Date(),
+      })
+      .returning();
     return transaction;
   }
 
   async getUserTransactions(userId: string): Promise<Transaction[]> {
-    return Array.from(this.transactions.values())
-      .filter(t => t.userId === userId)
-      .sort((a, b) => b.createdAt!.getTime() - a.createdAt!.getTime());
+    return await db
+      .select()
+      .from(transactions)
+      .where(eq(transactions.userId, userId))
+      .orderBy(transactions.createdAt);
   }
 
   // Winner operations
   async createWinner(winnerData: InsertWinner): Promise<Winner> {
-    const winner: Winner = {
-      id: this.winnerIdCounter++,
-      ...winnerData,
-      announcedAt: new Date(),
-    };
-    this.winners.set(winner.id, winner);
+    const [winner] = await db
+      .insert(winners)
+      .values({
+        ...winnerData,
+        celebrationVideoUrl: winnerData.celebrationVideoUrl || null,
+        announcedAt: new Date(),
+      })
+      .returning();
     return winner;
   }
 
   async getRecentWinners(limit = 10): Promise<(Winner & { user: User; draw: Draw })[]> {
-    const recentWinners = Array.from(this.winners.values())
-      .sort((a, b) => b.announcedAt!.getTime() - a.announcedAt!.getTime())
-      .slice(0, limit);
+    const results = await db
+      .select({
+        winner: winners,
+        user: users,
+        draw: draws,
+      })
+      .from(winners)
+      .innerJoin(users, eq(winners.userId, users.id))
+      .innerJoin(draws, eq(winners.drawId, draws.id))
+      .orderBy(winners.announcedAt)
+      .limit(limit);
 
-    return recentWinners.map(winner => {
-      const user = this.users.get(winner.userId);
-      const draw = this.draws.get(winner.drawId);
-      return {
-        ...winner,
-        user: user!,
-        draw: draw!,
-      };
-    });
+    return results.map(({ winner, user, draw }) => ({
+      ...winner,
+      user,
+      draw,
+    }));
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
