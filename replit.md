@@ -97,7 +97,11 @@ The application is configured for deployment on Replit with:
 
 ## Changelog
 
-- July 01, 2025. Initial setup
+- July 01, 2025: Initial setup with database schema and authentication
+- July 01, 2025: Enhanced reels functionality with real winner data
+- July 01, 2025: Added comprehensive documentation (SCHEMA.md, MIGRATION.md, README.md)
+- July 01, 2025: Implemented winner reels API endpoint with celebration content
+- July 01, 2025: Added database seeding with sample draws and winners
 
 ## User Preferences
 

@@ -9,6 +9,8 @@ import {
   insertWinnerSchema 
 } from "@shared/schema";
 
+
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
@@ -242,6 +244,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching winners:", error);
       res.status(500).json({ message: "Failed to fetch winners" });
+    }
+  });
+
+  // Winner reels for social features
+  app.get('/api/winners/reels', async (req, res) => {
+    try {
+      const winners = await storage.getRecentWinners(20);
+      
+      // Transform winners into reel format with celebration data
+      const reels = winners.map((winner, index) => {
+        // Local helper functions within scope
+        const generateCelebrationText = (drawTitle: string, prizeAmount: number): string => {
+          const celebrations = [
+            `I can't believe I won! Thank you Lucky11! 🎉🎉🎉`,
+            `Dreams do come true! Lucky11 made my day special! 💸✨`,
+            `First time participating and I won! Lucky11 is amazing! 🚀💻`,
+            `This is incredible! ${drawTitle} winner here! 🏆`,
+            `₹${prizeAmount.toLocaleString()} richer! Lucky11 you're the best! 💰`,
+            `Feeling blessed! Lucky11 changed my life! 🙏✨`,
+            `What a surprise! Didn't expect to win ${drawTitle}! 🎊`,
+            `Lucky11 made my dreams come true! Thank you! 💫`,
+            `From hoping to winning! Lucky11 is pure magic! ✨`,
+            `This is unreal! Lucky11 you made my year! 🎉`
+          ];
+          return celebrations[Math.floor(Math.random() * celebrations.length)];
+        };
+
+        const getTimeAgo = (date: Date): string => {
+          const now = new Date();
+          const diff = now.getTime() - date.getTime();
+          const minutes = Math.floor(diff / (1000 * 60));
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          
+          if (minutes < 60) {
+            return `${minutes} minutes ago`;
+          } else if (hours < 24) {
+            return `${hours} hours ago`;
+          } else {
+            return `${days} days ago`;
+          }
+        };
+
+        return {
+          id: winner.id,
+          winnerName: `${winner.user.firstName || 'Winner'} ${winner.user.lastName || ''}`.trim(),
+          winnerImage: winner.user.profileImageUrl || `https://images.unsplash.com/photo-${507003211169 + index}?auto=format&fit=crop&w=100&h=100`,
+          prize: winner.draw.title || 'Prize',
+          prizeAmount: `₹${parseFloat(winner.prizeAmount.toString()).toLocaleString()}`,
+          drawTitle: winner.draw.title,
+          videoUrl: winner.celebrationVideoUrl || '',
+          thumbnailUrl: winner.draw.prizeImageUrl || `https://images.unsplash.com/photo-${1511707171634 + index}?auto=format&fit=crop&w=400&h=600`,
+          likes: Math.floor(Math.random() * 2000) + 500,
+          comments: Math.floor(Math.random() * 300) + 50,
+          shares: Math.floor(Math.random() * 100) + 20,
+          isLiked: Math.random() > 0.7,
+          celebrationText: generateCelebrationText(winner.draw.title, parseFloat(winner.prizeAmount.toString())),
+          winDate: getTimeAgo(winner.announcedAt || new Date()),
+          isVip: winner.user.isVip || false
+        };
+      });
+
+      res.json(reels);
+    } catch (error) {
+      console.error("Error fetching winner reels:", error);
+      res.status(500).json({ message: "Failed to fetch winner reels" });
     }
   });
 

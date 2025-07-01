@@ -16,9 +16,11 @@ import {
   Trophy,
   Crown,
   Gift,
-  Coins
+  Coins,
+  Loader2
 } from "lucide-react";
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 
 interface WinnerReel {
   id: number;
@@ -47,62 +49,24 @@ export default function Reels() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Mock winner reels data
-  const winnerReels: WinnerReel[] = [
-    {
-      id: 1,
-      winnerName: "Rahul Sharma",
-      winnerImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100",
-      prize: "iPhone 15 Pro Max",
-      prizeAmount: "₹25,000",
-      drawTitle: "Today's Mega Draw",
-      videoUrl: "", // Would be actual video URL
-      thumbnailUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&h=600",
-      likes: 1247,
-      comments: 234,
-      shares: 89,
-      isLiked: false,
-      celebrationText: "I can't believe I won! Thank you Lucky11! 🎉🎉🎉",
-      winDate: "2 hours ago",
-      isVip: false
-    },
-    {
-      id: 2,
-      winnerName: "Priya Patel",
-      winnerImage: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=100&h=100",
-      prize: "Cash Prize",
-      prizeAmount: "₹50,000",
-      drawTitle: "Morning Special",
-      videoUrl: "",
-      thumbnailUrl: "https://images.unsplash.com/photo-1607301404481-0571e4447cfd?auto=format&fit=crop&w=400&h=600",
-      likes: 892,
-      comments: 156,
-      shares: 67,
-      isLiked: true,
-      celebrationText: "Dreams do come true! Lucky11 made my day special! 💸✨",
-      winDate: "1 day ago",
-      isVip: true
-    },
-    {
-      id: 3,
-      winnerName: "Amit Kumar",
-      winnerImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&h=100",
-      prize: "MacBook Pro",
-      prizeAmount: "₹75,000",
-      drawTitle: "Lucky 7 Draw",
-      videoUrl: "",
-      thumbnailUrl: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&h=600",
-      likes: 2156,
-      comments: 445,
-      shares: 123,
-      isLiked: false,
-      celebrationText: "First time participating and I won! Lucky11 is amazing! 🚀💻",
-      winDate: "3 days ago",
-      isVip: false
+  // Load winner reels from API
+  const { data: winnerReels = [], isLoading } = useQuery({
+    queryKey: ['/api/winners/reels'],
+    queryFn: async () => {
+      const response = await fetch('/api/winners/reels');
+      if (!response.ok) throw new Error('Failed to fetch winner reels');
+      return response.json();
     }
-  ];
+  });
 
-  const [reels, setReels] = useState(winnerReels);
+  const [reels, setReels] = useState<WinnerReel[]>([]);
+
+  // Update reels when data is loaded
+  useEffect(() => {
+    if (winnerReels.length > 0) {
+      setReels(winnerReels);
+    }
+  }, [winnerReels]);
 
   const handleScroll = (direction: 'up' | 'down') => {
     if (direction === 'down' && currentReelIndex < reels.length - 1) {
@@ -113,7 +77,7 @@ export default function Reels() {
   };
 
   const toggleLike = (reelId: number) => {
-    setReels(reels.map(reel => 
+    setReels(reels.map((reel: WinnerReel) => 
       reel.id === reelId 
         ? { 
             ...reel, 
@@ -145,6 +109,35 @@ export default function Reels() {
 
   if (!user) return null;
 
+  if (isLoading) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
+          <p className="text-white/70">Loading winner stories...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (reels.length === 0) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4 text-center p-6">
+          <Trophy className="w-16 h-16 text-purple-500" />
+          <h2 className="text-xl font-bold">No Winner Stories Yet</h2>
+          <p className="text-white/70">Be the first to win and share your celebration!</p>
+          <Button 
+            onClick={() => setLocation('/draws')}
+            className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700"
+          >
+            Explore Draws
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-md mx-auto min-h-screen bg-black text-white relative overflow-hidden">
       {/* Header */}
@@ -167,7 +160,7 @@ export default function Reels() {
         className="relative h-screen w-full"
         style={{ transform: `translateY(-${currentReelIndex * 100}vh)`, transition: 'transform 0.3s ease' }}
       >
-        {reels.map((reel, index) => (
+        {reels.map((reel: WinnerReel, index: number) => (
           <div 
             key={reel.id}
             className="absolute inset-0 flex items-center justify-center"
@@ -273,7 +266,7 @@ export default function Reels() {
 
             {/* Scroll Indicators */}
             <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex flex-col space-y-2">
-              {reels.map((_, idx) => (
+              {reels.map((_: WinnerReel, idx: number) => (
                 <div 
                   key={idx}
                   className={`w-1 h-8 rounded-full ${
