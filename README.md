@@ -1,310 +1,316 @@
-# Lucky11 - Premium Mobile Lucky Draw App
+# Lucky11 - Premium Lucky Draw Mobile App
 
-## 🎯 Overview
+A sophisticated mobile application built with React and Express that brings the excitement of lucky draws to your fingertips. Lucky11 features a comprehensive coin-based economy, real-time draws, multiple earning opportunities, and an immersive winner celebration experience.
 
-Lucky11 is a premium mobile-first lucky draw application that combines the excitement of lottery games with modern social features. Built with a coin-based economy system, users can participate in various draws to win exciting prizes while enjoying a CRED-inspired premium user experience.
+## 🎯 Key Features
 
-## ✨ Key Features
+### Core Functionality
+- **Advanced Coin Economy**: Multiple ways to earn and spend virtual coins
+- **Real-Time Lucky Draws**: Join live draws with countdown timers and predetermined winners
+- **Winner Celebrations**: TikTok-style video reels showcasing winner celebrations
+- **Comprehensive Earning System**: 8+ methods to earn coins including daily check-ins, ads, social tasks
+- **User Profiles**: Track participation history, wins, streaks, and detailed statistics
 
-### 🎮 Core Functionality
-- **Lucky Draws**: Participate in time-limited draws with guaranteed winners
-- **Coin Economy**: Purchase and spend virtual coins to enter draws
-- **Real-time Countdown**: Live timers showing when draws end
-- **Winner Selection**: AI-powered random winner selection system
-- **Prize Distribution**: Automatic prize crediting to winner accounts
+### Premium Experience
+- **CRED-Inspired Design**: Dark theme with gradient accents and premium aesthetics
+- **Mobile-First**: Optimized responsive design for all mobile devices
+- **Smooth Animations**: Fluid transitions and micro-interactions throughout
+- **Real-Time Updates**: Live participant counts and draw status updates
+- **Tabbed Navigation**: Live/Past/My Draws organization with pagination
 
-### 👤 User Experience
-- **Replit Authentication**: Seamless login with Replit accounts
-- **Mobile-First Design**: Optimized for mobile devices with touch-friendly UI
-- **Dark Theme**: Premium dark mode with gradient accents
-- **Responsive Layout**: Perfect experience across all screen sizes
-- **Intuitive Navigation**: Bottom navigation for easy mobile access
-
-### 💰 Economy System
-- **Virtual Coins**: Internal currency for draw participation
-- **Multiple Packages**: Various coin purchase options with bonuses
-- **Daily Check-in**: Earn bonus coins with streak multipliers
-- **Transaction History**: Complete audit trail of all coin activities
-- **Balance Tracking**: Real-time coin balance updates
-
-### 🏆 Social Features
-- **Winner Showcase**: Public celebration of recent winners
-- **Winner Reels**: TikTok-style video reels of winner celebrations
-- **Public Profiles**: User statistics and achievements
-- **Leaderboards**: Top winners and most active participants
-- **VIP Status**: Premium membership with exclusive benefits
-
-### 📊 Statistics & Analytics
-- **User Stats**: Track participations, wins, and earnings
-- **Streak System**: Daily check-in streaks with increasing rewards
-- **Performance Metrics**: Success rates and participation history
-- **Achievement System**: Unlock badges and milestones
-
-## 🛠 Technical Architecture
-
-### Frontend Stack
-- **React 18** with TypeScript for type safety
-- **Vite** for fast development and optimized builds
-- **Wouter** for lightweight client-side routing
-- **TanStack Query** for server state management and caching
-- **Tailwind CSS** for utility-first styling
-- **Shadcn/ui** for premium UI components
-- **Lucide React** for consistent iconography
-
-### Backend Stack
-- **Express.js** with TypeScript for robust API
-- **PostgreSQL** for reliable data persistence
-- **Drizzle ORM** for type-safe database operations
-- **Replit Auth** for secure user authentication
-- **Express Session** with PostgreSQL store
-- **Passport.js** for authentication middleware
-
-### Database Schema
-- **Users**: Profile data, coin balances, statistics
-- **Draws**: Draw information, prizes, timing
-- **Participations**: User draw participation records
-- **Transactions**: Complete coin transaction history
-- **Winners**: Winner records and prize distribution
-- **Sessions**: Secure session management
+### Enhanced Features
+- **Daily Check-in System**: Streak bonuses up to 100 coins
+- **Advertisement Rewards**: Watch video ads for instant 10-coin rewards
+- **Social Task System**: Share app, invite friends, rate app for 50-100 coins
+- **Achievement Unlocks**: Milestone-based rewards up to 300 coins
+- **Predetermined Winners**: Each draw has one guaranteed winner (no prize pool splitting)
+- **Comprehensive Transaction History**: Track all coin earnings and spendings
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ installed
-- PostgreSQL database access
-- Replit account for authentication
+- Node.js 20+ 
+- PostgreSQL database
+- Replit account (for authentication)
 
 ### Installation
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd lucky11
-   ```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up database**
-   ```bash
-   # Create database and push schema
-   npm run db:push
-   
-   # Optional: Seed with sample data
-   npm run seed
-   ```
-
-4. **Configure environment variables**
-   ```bash
-   # Required variables (auto-configured in Replit)
-   DATABASE_URL=postgresql://...
-   REPLIT_DOMAINS=your-domain.replit.app
-   REPL_ID=your-repl-id
-   ```
-
-5. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-### Deployment
-The app is configured for seamless deployment on Replit:
-- Frontend and backend served from single port
-- Database migrations handled automatically
-- Authentication configured for Replit domains
-
-## 📱 User Guide
-
-### Getting Started
-1. **Sign In**: Use your Replit account to access the app
-2. **Daily Check-in**: Earn bonus coins on your first visit each day
-3. **Browse Draws**: View available draws with prizes and entry fees
-4. **Purchase Coins**: Buy coin packages to participate in draws
-5. **Join Draws**: Spend coins to enter draws before they end
-6. **Check Results**: View winners and your participation history
-
-### Draw Participation
-- **Entry Requirements**: Have sufficient coins for entry fee
-- **One Entry Per Draw**: Each user can participate once per draw
-- **Deadline Awareness**: Draws end at specified times
-- **Winner Notification**: Winners are notified immediately after draw
-
-### Coin Management
-- **Purchase Options**: Multiple coin packages with bonus coins
-- **Daily Bonuses**: Free coins for daily check-ins
-- **Streak Rewards**: Increasing bonuses for consecutive days
-- **Transaction History**: View all coin activities in your wallet
-
-## 🎯 Current Features Status
-
-### ✅ Fully Implemented
-- User authentication and profile management
-- Coin purchasing and balance tracking
-- Draw creation and participation system
-- Winner selection and prize distribution
-- Daily check-in with streak bonuses
-- Transaction history and audit trails
-- Mobile-responsive design
-- Real-time countdown timers
-
-### 🚧 In Development
-- **Winner Reels**: TikTok-style winner celebration videos
-- **Social Features**: User interactions and sharing
-- **Push Notifications**: Draw end and winner notifications
-- **Advanced Analytics**: Detailed user statistics
-- **Payment Integration**: Real money transactions (testing mode)
-
-### 🔮 Planned Features
-- **Live Draws**: Real-time draw broadcasting
-- **Chat System**: User communication during draws
-- **Referral Program**: Earn coins for inviting friends
-- **Seasonal Events**: Special themed draws and bonuses
-- **Mobile Apps**: Native iOS and Android applications
-
-## 💳 Payment Integration
-
-### Current Status: Testing Mode
-- Coin purchases are enabled for testing
-- No real money transactions processed
-- Simulated payment flows for development
-- Full integration planned for production
-
-### Planned Payment Methods
-- **Credit/Debit Cards**: Stripe integration
-- **Digital Wallets**: PayPal, Apple Pay, Google Pay
-- **Cryptocurrency**: Bitcoin, Ethereum support
-- **Bank Transfers**: Direct bank account integration
-
-## 🔧 Development
-
-### Project Structure
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd lucky11
 ```
-lucky11/
-├── client/                 # React frontend
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables:
+```bash
+# Database
+DATABASE_URL=your_postgresql_connection_string
+PGHOST=your_host
+PGPORT=5432
+PGUSER=your_username
+PGPASSWORD=your_password
+PGDATABASE=your_database
+
+# Session
+SESSION_SECRET=your_session_secret_here
+```
+
+4. Initialize the database:
+```bash
+npm run db:push
+```
+
+5. Seed sample data (optional):
+```bash
+npm run seed
+```
+
+6. Start the development server:
+```bash
+npm run dev
+```
+
+The app will be available at `http://localhost:5000`
+
+## 🏗️ Architecture
+
+### Frontend (React + TypeScript)
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite for fast development and building
+- **Routing**: Wouter for lightweight client-side routing
+- **State Management**: TanStack Query for server state management
+- **UI Framework**: Shadcn/ui components with Radix UI primitives
+- **Styling**: Tailwind CSS with custom design system and animations
+
+### Backend (Express + TypeScript)
+- **Framework**: Express.js with TypeScript
+- **Database**: PostgreSQL with Drizzle ORM
+- **Authentication**: Replit Auth integration with session management
+- **Session Management**: Express sessions with PostgreSQL store
+- **API Design**: RESTful endpoints with comprehensive validation
+
+### Database Schema
+- **Users**: Profile data, coin balances, statistics, streaks, VIP status
+- **Draws**: Draw configuration, prizes, timing, participant limits
+- **Participations**: User entries in draws with timestamps
+- **Transactions**: Complete coin earning/spending history
+- **Winners**: Draw results and prize distribution records
+- **Sessions**: Secure session storage in PostgreSQL
+
+## 📱 Pages & Features
+
+### Enhanced Home Page
+- CRED-inspired premium dashboard design
+- Quick stats and coin balance display
+- Recent draw highlights with beautiful cards
+- Navigation to main features
+- Premium gradient backgrounds
+
+### Advanced Draws System
+- **Live Draws**: Active draws with real-time countdown timers
+- **Past Draws**: Completed draws with winner status and results
+- **My Draws**: User's complete participation history
+- **Pagination**: 5 draws per page for optimal performance
+- **Real-time Updates**: Live participant counting and status updates
+- **Smart Filtering**: Intelligent categorization of draws
+
+### Comprehensive Earning System
+- **Daily Check-in**: Streak-based rewards (10-100 coins)
+- **Watch Advertisements**: 10 coins per video ad
+- **Social Tasks**:
+  - Share App: 50 coins
+  - Invite Friends: 100 coins
+  - Rate App: 75 coins
+- **Achievement System**:
+  - First Win: 100 coins
+  - 10 Participations: 150 coins
+  - 5-Day Streak: 200 coins
+  - Lucky Winner: 300 coins
+- **Task Cooldowns**: Prevents abuse with smart timing
+- **Progress Tracking**: Visual progress bars and completion status
+
+### Winner Reels
+- **TikTok-Style Interface**: Vertical scrolling video experience
+- **Winner Celebrations**: Real winner data with celebration videos
+- **Interactive Elements**: Like, comment, and share functionality
+- **Infinite Scroll**: Smooth animations and loading
+- **Premium Visual Effects**: Gradient overlays and premium styling
+
+### Enhanced Wallet
+- **Detailed Coin Balance**: Real-time balance updates
+- **Purchase Packages**: Multiple coin packages with bonuses
+- **Complete Transaction History**: All earnings and spendings
+- **Payment Integration**: Ready for payment gateway integration
+- **Visual Transaction Types**: Icons and categories for all transactions
+
+### Detailed Profile
+- **Comprehensive Statistics**: Wins, participations, earnings, streaks
+- **Achievement Gallery**: Unlocked achievements and progress
+- **Participation History**: Complete draw history with results
+- **Settings**: User preferences and account management
+
+## 🛠️ Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build optimized production bundle
+- `npm run preview` - Preview production build locally
+- `npm run db:push` - Push database schema changes to PostgreSQL
+- `npm run seed` - Seed database with comprehensive sample data
+
+### Enhanced Project Structure
+```
+├── client/                 # React frontend application
 │   ├── src/
 │   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Application pages
-│   │   ├── hooks/          # Custom React hooks
-│   │   └── lib/            # Utility functions
-├── server/                 # Express backend
-│   ├── routes.ts           # API route definitions
-│   ├── storage.ts          # Database abstraction layer
-│   └── replitAuth.ts       # Authentication setup
-├── shared/                 # Shared types and schemas
-│   └── schema.ts           # Database schema definitions
-└── scripts/                # Utility scripts
+│   │   │   ├── ui/        # Shadcn/ui components
+│   │   │   ├── draw-card.tsx
+│   │   │   ├── coin-balance.tsx
+│   │   │   ├── countdown-timer.tsx
+│   │   │   └── winner-modal.tsx
+│   │   ├── pages/         # Page components
+│   │   │   ├── home.tsx   # CRED-inspired homepage
+│   │   │   ├── draws-enhanced.tsx # Advanced draws with tabs
+│   │   │   ├── earn.tsx   # Comprehensive earning system
+│   │   │   ├── reels.tsx  # TikTok-style winner reels
+│   │   │   └── wallet.tsx # Enhanced wallet features
+│   │   ├── hooks/         # Custom React hooks
+│   │   └── lib/           # Utilities and configurations
+├── server/                # Express backend
+│   ├── routes.ts          # Enhanced API routes
+│   ├── storage.ts         # Database operations with Drizzle
+│   ├── auth.ts           # Replit Auth integration
+│   └── db.ts             # Database connection setup
+├── shared/                # Shared TypeScript types
+│   └── schema.ts         # Complete database schema
+├── scripts/              # Database and utility scripts
+│   └── seed-data.ts      # Comprehensive data seeding
+└── docs/                 # Documentation
+    ├── SCHEMA.md         # Database schema documentation
+    └── MIGRATION.md      # Migration and setup guide
 ```
 
-### Development Workflow
-1. **Schema First**: Define data models in `shared/schema.ts`
-2. **API Design**: Implement routes in `server/routes.ts`
-3. **Database Layer**: Update storage interface as needed
-4. **Frontend Integration**: Connect UI to API endpoints
-5. **Testing**: Verify functionality across all features
+## 🎨 Enhanced Design System
 
-### Database Management
+### Premium Color Palette
+- **Primary Gradients**: Blue (#3B82F6 → #1D4ED8)
+- **Secondary Gradients**: Purple (#8B5CF6 → #7C3AED)  
+- **Accent Colors**: Gold/Yellow (#F59E0B → #D97706)
+- **Success**: Green (#10B981 → #059669)
+- **Warning**: Orange (#F97316 → #EA580C)
+- **Error**: Red (#EF4444 → #DC2626)
+- **Background**: Dark gradients with glass morphism
+- **Text**: White primary, gray variations for hierarchy
+
+### Typography System
+- **Display**: Bold gradient text with effects
+- **Headings**: Clean hierarchy with proper spacing
+- **Body**: Readable sans-serif optimized for mobile
+- **UI Elements**: Compact, efficient text styling
+- **Numbers**: Tabular figures for coin amounts
+
+### Advanced Component System
+- **Glass Cards**: Backdrop blur with subtle borders
+- **Gradient Buttons**: Multi-state hover and active effects
+- **Premium Badges**: Status indicators with animations
+- **Progress Bars**: Animated progress with smooth transitions
+- **Modal Overlays**: Full-screen immersive experiences
+
+## 🔐 Security & Data Protection
+
+- **Replit Auth**: Secure OAuth 2.0 integration
+- **Session Security**: Server-side sessions with PostgreSQL storage
+- **Input Validation**: Comprehensive Zod schema validation
+- **SQL Injection Prevention**: Parameterized queries with Drizzle ORM
+- **Rate Limiting**: API endpoint protection
+- **Data Sanitization**: User input cleaning and validation
+
+## 📊 Performance Optimizations
+
+- **Code Splitting**: Route-based and component-level splitting
+- **Lazy Loading**: Dynamic imports for better initial load
+- **Query Optimization**: TanStack Query with intelligent caching
+- **Database Indexing**: Optimized queries with proper indexes
+- **Image Optimization**: Responsive images with lazy loading
+- **Bundle Analysis**: Optimized builds with tree shaking
+
+## 🚀 Deployment Guide
+
+### Production Build Process
 ```bash
-# Push schema changes
+# Install dependencies
+npm install
+
+# Build optimized bundle
+npm run build
+
+# Database setup
 npm run db:push
 
-# Generate migration files
-npm run db:generate
-
-# View database studio
-npm run db:studio
+# Optional: Seed data
+npm run seed
 ```
 
-## 🎨 Design System
+### Environment Configuration
+Required environment variables:
+```bash
+# Database Configuration
+DATABASE_URL=postgresql://user:password@host:port/database
+PGHOST=your_postgresql_host
+PGPORT=5432
+PGUSER=your_username
+PGPASSWORD=your_password
+PGDATABASE=your_database_name
 
-### Color Palette
-- **Primary**: Purple gradient (#8B5CF6 to #A855F7)
-- **Secondary**: Blue accent (#3B82F6)
-- **Success**: Green (#10B981)
-- **Warning**: Orange (#F59E0B)
-- **Error**: Red (#EF4444)
+# Application Configuration
+NODE_ENV=production
+SESSION_SECRET=your_secure_session_secret
+```
 
-### Typography
-- **Headers**: Inter font family, bold weights
-- **Body**: Inter font family, regular weights
-- **Monospace**: JetBrains Mono for code elements
+### Replit Deployment Features
+- **Automatic Builds**: Configured build process
+- **Environment Management**: Secure secret handling
+- **Database Integration**: PostgreSQL connection
+- **Auth Integration**: Replit Auth setup
+- **Static Serving**: Optimized asset delivery
 
-### Components
-- **Cards**: Rounded corners, subtle shadows
-- **Buttons**: Gradient backgrounds, hover effects
-- **Forms**: Consistent spacing, validation states
-- **Navigation**: Bottom tab bar for mobile
+## 🤝 Contributing Guidelines
 
-## 🔐 Security
+1. **Fork** the repository
+2. **Create** feature branch: `git checkout -b feature/amazing-feature`
+3. **Follow** coding standards and TypeScript best practices
+4. **Test** thoroughly on mobile devices
+5. **Commit** with descriptive messages: `git commit -m 'Add: amazing feature'`
+6. **Push** to branch: `git push origin feature/amazing-feature`
+7. **Open** Pull Request with detailed description
 
-### Authentication
-- **Replit Auth**: Secure OAuth integration
-- **Session Management**: PostgreSQL-backed sessions
-- **CSRF Protection**: Built-in request validation
-- **Rate Limiting**: API endpoint protection
-
-### Data Protection
-- **Input Validation**: Zod schema validation
-- **SQL Injection Prevention**: Parameterized queries
-- **XSS Protection**: Sanitized user inputs
-- **HTTPS Only**: Secure transmission required
-
-## 📊 Analytics & Monitoring
-
-### Key Metrics
-- **User Engagement**: Daily active users, session duration
-- **Draw Performance**: Participation rates, completion times
-- **Revenue Tracking**: Coin sales, conversion rates
-- **System Health**: API response times, error rates
-
-### Monitoring Tools
-- **Database Monitoring**: Query performance, connection health
-- **Application Logs**: Error tracking, user actions
-- **Performance Metrics**: Page load times, API latency
-
-## 🤝 Contributing
-
-### Development Guidelines
-1. **Code Style**: Follow TypeScript best practices
-2. **Testing**: Write tests for new features
-3. **Documentation**: Update README for significant changes
-4. **Performance**: Optimize for mobile performance
-5. **Accessibility**: Ensure WCAG compliance
-
-### Contribution Process
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+### Development Standards
+- TypeScript strict mode compliance
+- Mobile-first responsive design
+- Accessibility standards (WCAG 2.1)
+- Performance optimization
+- Comprehensive error handling
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Licensed under the MIT License. See [LICENSE](LICENSE) for complete details.
 
-## 🆘 Support
+## 🙏 Acknowledgments & Credits
 
-### Getting Help
-- **Documentation**: Check this README and schema docs
-- **Issues**: Report bugs via GitHub issues
-- **Contact**: Reach out to the development team
-
-### Common Issues
-- **Database Connection**: Verify DATABASE_URL environment variable
-- **Authentication**: Check Replit Auth configuration
-- **Build Errors**: Ensure Node.js version compatibility
-- **Mobile Display**: Test responsive design on various devices
-
-## 🎉 Acknowledgments
-
-- **Replit Team**: For the amazing development platform
-- **Shadcn**: For the beautiful UI component library
-- **Tailwind CSS**: For the utility-first styling approach
-- **Drizzle ORM**: For type-safe database operations
-- **TanStack Query**: For excellent server state management
+- **Replit**: Platform, authentication, and hosting services
+- **Shadcn/ui**: Beautiful, accessible UI component library
+- **Radix UI**: Primitive components with accessibility focus
+- **Lucide React**: Clean, consistent icon library
+- **TanStack Query**: Powerful server state management
+- **Drizzle ORM**: Type-safe database operations
+- **Tailwind CSS**: Utility-first styling framework
 
 ---
 
-**Built with ❤️ by the Lucky11 Team**
-
-*Ready to get lucky? Start your journey today!*
+**🎲 Built with passion for the thrill of winning and premium mobile experiences**
