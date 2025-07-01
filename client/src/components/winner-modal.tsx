@@ -13,7 +13,7 @@ export default function WinnerModal({ isOpen, onClose, prize, drawTitle }: Winne
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: "I won a LuckyDraw!",
+        title: "I won a Lucky11 draw!",
         text: `Just won ${prize} in ${drawTitle}! 🎉`,
         url: window.location.origin,
       });

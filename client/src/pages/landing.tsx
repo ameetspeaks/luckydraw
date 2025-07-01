@@ -10,7 +10,7 @@ export default function Landing() {
         <header className="text-center py-12 px-6">
           <div className="text-6xl mb-4">🎯</div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">
-            LuckyDraw
+            Lucky11
           </h1>
           <p className="text-gray-400 text-lg">Premium Lucky Draw Experience</p>
         </header>

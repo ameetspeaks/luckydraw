@@ -10,6 +10,8 @@ import Wallet from "@/pages/wallet";
 import Draws from "@/pages/draws";
 import History from "@/pages/history";
 import Profile from "@/pages/profile";
+import Result from "@/pages/result";
+import Reels from "@/pages/reels";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -26,6 +28,8 @@ function Router() {
           <Route path="/draws" component={Draws} />
           <Route path="/history" component={History} />
           <Route path="/profile" component={Profile} />
+          <Route path="/results" component={Result} />
+          <Route path="/reels" component={Reels} />
         </>
       )}
       <Route component={NotFound} />

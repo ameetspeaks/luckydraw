@@ -1,8 +1,8 @@
-# Lucky Draw App - Replit.md
+# Lucky11 - Replit.md
 
 ## Overview
 
-This is a premium lucky draw mobile application built with a modern tech stack featuring a React frontend and Express backend. The app implements a coin-based economy where users purchase coins to participate in draws, with AI-powered random winner selection. The application is designed with CRED-inspired premium aesthetics and focuses on mobile-first user experience.
+Lucky11 is a premium lucky draw mobile application built with a modern tech stack featuring a React frontend and Express backend. The app implements a coin-based economy where users purchase coins to participate in draws, with AI-powered random winner selection. The application features CRED-inspired premium aesthetics, mobile-first design, and includes innovative social features like winner video reels similar to TikTok/Instagram Reels.
 
 ## System Architecture
 

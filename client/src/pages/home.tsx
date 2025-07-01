@@ -12,10 +12,12 @@ import BottomNavigation from "@/components/bottom-navigation";
 import WinnerModal from "@/components/winner-modal";
 import { Bell, Gift, Users, Trophy, TrendingUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 
 export default function Home() {
   const { user, isLoading: userLoading } = useAuth();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   const [showWinnerModal, setShowWinnerModal] = useState(false);
 
   const { data: draws, isLoading: drawsLoading } = useQuery({
@@ -178,7 +180,12 @@ export default function Home() {
           <section className="px-4 mb-6">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-lg font-semibold">Recent Winners</h3>
-              <Button variant="ghost" size="sm" className="text-blue-400">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-blue-400"
+                onClick={() => setLocation("/results")}
+              >
                 View All
               </Button>
             </div>
@@ -252,6 +259,29 @@ export default function Home() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </section>
+
+        {/* Quick Actions */}
+        <section className="px-4 mb-6">
+          <h3 className="text-lg font-semibold mb-3">Quick Actions</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <Button 
+              onClick={() => setLocation("/reels")}
+              variant="outline"
+              className="glass-card border-pink-500/30 h-16 flex-col space-y-1"
+            >
+              <div className="text-2xl">🎬</div>
+              <span className="text-xs">Winner Stories</span>
+            </Button>
+            <Button 
+              onClick={() => setLocation("/results")}
+              variant="outline"
+              className="glass-card border-yellow-500/30 h-16 flex-col space-y-1"
+            >
+              <div className="text-2xl">🏆</div>
+              <span className="text-xs">Results</span>
+            </Button>
           </div>
         </section>
 
