@@ -1,0 +1,363 @@
+# Lucky Draw App - Complete Development Prompt for Replit AI
+
+## Project Overview
+Create a premium lucky draw mobile application inspired by CRED's modern design language. The app should feature daily lucky draws where users pay to participate and AI randomly selects winners at fixed times.
+
+## Core Features & Functionality
+
+### 1. User Authentication & Onboarding
+- Smooth onboarding flow with animated illustrations
+- Phone number/email authentication
+- Profile setup with avatar upload
+- Welcome bonus/credits for new users
+- Biometric login support
+
+### 2. Home Dashboard
+- **Hero Section**: Current active draw with countdown timer
+- **Wallet Balance**: Prominent coin balance with quick top-up button
+- **Quick Stats**: Total participation, wins, coins earned
+- **Recent Winners**: Horizontal scrolling cards with winner highlights
+- **Upcoming Draws**: Timeline view of scheduled draws with coin requirements
+- **Floating Action Button**: Quick participate option (if sufficient coins)
+- **Daily Bonus**: Claim free coins section
+
+### 3. In-App Wallet System
+- **Coin Balance Display**: Prominent wallet balance on home screen
+- **Buy Coins**: Multiple packages with bonus coins for larger purchases
+- **Payment Integration**: UPI, cards, net banking for coin purchases
+- **Transaction History**: Complete coin earning/spending log
+- **Low Balance Alerts**: Smart notifications when coins are running low
+- **Coin Expiry System**: Optional expiry dates for promotional coins
+
+### 4. Draw Participation System
+- **Draw Details Page**: Prize information, coin entry fee, participants count
+- **Coin-Based Entry**: Use wallet coins instead of direct money
+- **Instant Participation**: No payment delays, immediate entry with coins
+- **Confirmation Flow**: Animated success state after coin deduction
+- **Entry Tickets**: Visual representation of user's entries with coin cost
+- **Share Feature**: Invite friends for bonus coins/entries
+
+### 4. Winner Selection & Announcement
+- **AI-Powered Random Selection**: Transparent algorithm at admin-set time
+- **Live Draw Animation**: Engaging winner reveal animation
+- **Winner Notification**: Push notifications and in-app celebrations
+- **Winner Profile**: Showcase winner with photo and celebration message
+
+### 6. History & Analytics
+- **Participation History**: Detailed log with coin transactions
+- **Coin Tracker**: Visual charts showing coin flow over time
+- **Monthly Reports**: Gamified achievement system with coin rewards
+- **Transaction History**: Complete coin earning/spending record
+- **Wallet Statements**: Downloadable coin transaction reports
+
+### 6. Winners Video Section (Reels Format)
+- **Video Feed**: TikTok-style vertical video player
+- **Winner Stories**: Short celebration videos from winners
+- **Video Upload**: Allow winners to upload celebration videos
+- **Social Features**: Like, share, comment on winner videos
+- **Video Categories**: Filter by prize type, amount, date
+- **Coin Rewards**: Earn coins for engaging with videos (likes, shares)
+
+### 7. Advanced Gamification Features
+- **Daily Check-in**: Earn coins for consecutive daily logins
+- **Spin Wheel**: Alternative way to earn bonus coins
+- **Scratch Cards**: Mini-games for coin rewards
+- **Achievement System**: Unlock badges and coin bonuses
+- **Leaderboards**: Monthly top participants with coin prizes
+- **Lucky Numbers**: Personal lucky numbers for better odds
+- **Streak Rewards**: Bonus coins for participation streaks
+
+### 8. Social & Community Features
+- **Friend System**: Add friends and see their activities
+- **Group Draws**: Create private draws among friends
+- **Chat Rooms**: Community discussions about draws
+- **Gifting System**: Send coins to friends
+- **Social Challenges**: Complete tasks with friends for rewards
+- **Community Contests**: User-generated content competitions
+
+### 9. VIP & Premium Features
+- **VIP Membership**: Monthly subscription for exclusive benefits
+- **Premium Draws**: High-value draws for VIP members only
+- **Early Access**: Participate in draws before public release
+- **Higher Coin Rewards**: Increased earning multipliers
+- **Priority Support**: Dedicated customer service
+- **Exclusive Events**: Special seasonal draws and tournaments
+
+### 10. Coin Economy System
+- **Dynamic Pricing**: Coin values adjust based on demand
+- **Bonus Packages**: Limited-time offers with extra coins
+- **Promotional Coins**: Special coins for events (non-transferable)
+- **Coin Conversion**: Convert winnings back to coins
+- **Bulk Purchase Discounts**: Better rates for larger coin purchases
+- **Seasonal Offers**: Festival and holiday coin bonuses
+
+### 11. Advanced Security Features
+- **Biometric Wallet**: Secure coin transactions with fingerprint/face ID
+- **Transaction Limits**: Daily/weekly spending limits for responsible gaming
+- **Fraud Detection**: AI-powered suspicious activity monitoring
+- **Two-Factor Authentication**: Extra security for large transactions
+- **Blockchain Integration**: Transparent coin transaction logging
+- **Anti-Cheat System**: Prevent gaming the system
+
+### 12. AI & Machine Learning Features
+- **Smart Notifications**: Personalized draw recommendations
+- **Predictive Analytics**: Suggest optimal participation times
+- **Behavioral Analysis**: Customize user experience based on patterns
+- **Dynamic Pricing**: AI-adjusted coin packages
+- **Personalized Offers**: Tailored coin deals based on user behavior
+- **Intelligent Matchmaking**: Balanced competition levels
+
+### 7. Additional Premium Features
+- **Lucky Wheel**: Alternative participation method using coins
+- **Referral System**: Earn coins for inviting friends
+- **VIP Membership**: Special draws and coin bonuses for premium users
+- **Push Notifications**: Smart engagement notifications
+- **Dark/Light Theme**: User preference toggle
+- **Multi-language Support**: Localization ready
+- **Offline Mode**: Cache balance and allow offline browsing
+
+### 8. Admin Panel Features (Separate Development)
+*Note: Admin panel will be developed separately and is not included in this mobile app development scope*
+
+## Design Requirements (CRED-Inspired)
+
+### Color Palette
+```
+Primary: Deep Purple (#6C5CE7) to Electric Blue (#74B9FF) gradient
+Secondary: Mint Green (#00B894) for success states
+Accent: Sunset Orange (#FD79A8) for CTAs
+Background: Pure Black (#000000) and Dark Gray (#2D3436)
+Text: White (#FFFFFF) and Light Gray (#B2BEC3)
+Cards: Dark surfaces with subtle gradients (#1E2A3A to #2D3A4B)
+```
+
+### Typography
+- **Headlines**: Custom bold font (Montserrat/Poppins)
+- **Body Text**: Clean sans-serif (Inter/SF Pro)
+- **Numbers**: Monospace for amounts and timers
+- **Hierarchy**: Clear size distinctions (32px, 24px, 18px, 14px, 12px)
+
+### Visual Elements
+- **Cards**: Rounded corners (16px), subtle shadows, glass morphism effects
+- **Buttons**: Gradient fills, micro-interactions, haptic feedback
+- **Icons**: Outlined style, consistent stroke width
+- **Animations**: Smooth transitions (300ms ease-in-out)
+- **Loading States**: Skeleton screens and progressive loading
+
+### Layout Principles
+- **Grid System**: 16px base spacing, 8px micro-spacing
+- **Safe Areas**: Proper mobile viewport handling
+- **Touch Targets**: Minimum 44px for interactive elements
+- **Content Hierarchy**: Clear visual weight distribution
+
+## Technical Specifications
+
+### Frontend Framework
+- **React Native** or **Flutter** for cross-platform development
+- **State Management**: Redux Toolkit or Provider pattern
+- **Navigation**: Stack and tab navigation with smooth transitions
+- **Animations**: Lottie files for complex animations
+
+### Backend Requirements
+- **Database**: PostgreSQL or MongoDB for user, coin, and draw data
+- **Authentication**: JWT tokens with refresh mechanism
+- **Payment Gateway**: Razorpay/Stripe integration for coin purchases
+- **Push Notifications**: Firebase Cloud Messaging
+- **File Storage**: AWS S3 or Cloudinary for media
+- **Cron Jobs**: Automated winner selection scheduling
+- **Coin Management**: Secure wallet system with transaction logging
+- **Real-time Updates**: WebSocket for live balance updates
+
+### AI Integration
+- **Random Number Generation**: Cryptographically secure randomization
+- **Fairness Algorithm**: Transparent and auditable selection process
+- **Timestamp Verification**: Blockchain-like verification for transparency
+
+## User Experience Flow
+
+### Participation Journey
+1. **Discovery**: User sees attractive draw on home screen
+2. **Interest**: Taps to view draw details with rich media
+3. **Decision**: Clear pricing and prize information
+4. **Payment**: Seamless checkout with multiple options
+5. **Confirmation**: Engaging success animation with ticket number
+6. **Anticipation**: Countdown timer and notification setup
+7. **Result**: Winner announcement with celebration or consolation
+
+### Winner Experience
+1. **Notification**: Immediate push notification with celebration
+2. **In-App Celebration**: Confetti animation and winner badge
+3. **Prize Claim**: Clear instructions for prize collection
+4. **Social Sharing**: Easy sharing tools for social media
+5. **Video Upload**: Option to create winner story video
+
+## Screen Specifications
+
+### 1. Splash Screen
+- App logo with elegant animation
+- Loading progress indicator
+- Brand tagline
+
+### 2. Onboarding (3-4 screens)
+- Welcome message with value proposition
+- Feature highlights with illustrations
+- Permission requests (notifications, camera)
+- Account creation/login
+
+### 3. Home Dashboard
+- Header with profile and notifications
+- Current draw spotlight
+- Quick stats cards
+- Recent winners carousel
+- Bottom navigation
+
+### 4. Coin Purchase Screen
+- **Coin Packages**: Multiple tiers with bonus offerings
+- **Payment Method Selection**: UPI, cards, net banking, wallets
+- **Secure Payment Processing**: PCI compliant checkout
+- **Instant Credit**: Immediate coin balance update
+- **Purchase History**: Record of all coin transactions
+
+### 5. Wallet Management
+- **Balance Overview**: Current coins with transaction history
+- **Spending Analytics**: Visual breakdown of coin usage
+- **Top-up Options**: Quick purchase shortcuts
+- **Transaction Filters**: Search and filter coin activities
+- **Export Statements**: Download transaction reports
+
+### 6. Draw Details
+- **Hero Image/Video**: Prize showcase
+- **Coin Entry Fee**: Clear coin cost display
+- **Current Entries**: Live participant count
+- **Timer Countdown**: Real-time draw countdown
+- **Prize Description**: Detailed prize information
+- **Participate Button**: Coin-based entry (disabled if insufficient balance)
+- **Terms and Conditions**: Draw-specific rules
+
+### 7. Profile Section
+- **User Avatar and Stats**: Personal information display
+- **Coin Balance**: Prominent wallet balance
+- **Participation History**: Complete draw participation record
+- **Achievement Badges**: Unlocked rewards and milestones
+- **Settings and Preferences**: App customization options
+- **Referral Program**: Invite friends for coin rewards
+
+### 8. History Screens
+- **Tabbed Interface**: All, Won, Lost, Pending, Coin Transactions
+- **Advanced Filters**: Date range, coin amount, draw type
+- **Detailed Transaction Cards**: Rich information display
+- **Export Functionality**: Share or download reports
+- **Search Capability**: Find specific transactions
+
+### 9. Winners Video Feed
+- **Full-Screen Video Player**: Immersive viewing experience
+- **Swipe Navigation**: Smooth up/down video transitions
+- **Engagement Buttons**: Like, share, comment with coin rewards
+- **Video Information Overlay**: Winner details and prize info
+- **Creator Profile Link**: View winner's profile
+- **Earn Coins**: Get coins for watching and engaging
+
+### 10. Gamification Screens
+- **Daily Check-in**: Streak tracking with escalating rewards
+- **Spin Wheel**: Interactive wheel with coin prizes
+- **Scratch Cards**: Digital scratch-off games
+- **Achievement Gallery**: Badge collection display
+- **Leaderboards**: Rankings with coin prize distributions
+- **Challenge Hub**: Active and completed challenges
+
+### 11. Social Features
+- **Friends List**: Add/remove friends functionality
+- **Group Draws**: Create private draws with coin pooling
+- **Community Chat**: Real-time messaging with coin tips
+- **Gift Coins**: Send coins to friends interface
+- **Social Challenges**: Collaborative tasks and competitions
+
+## Security & Compliance
+- **Data Encryption**: End-to-end encryption for sensitive data
+- **PCI Compliance**: Secure payment processing
+- **GDPR Ready**: User data privacy controls
+- **Audit Trails**: Complete logging of all transactions
+- **Fraud Detection**: Unusual activity monitoring
+
+## Performance Requirements
+- **Load Time**: Under 3 seconds for initial app launch
+- **Animation**: 60fps smooth animations
+- **Offline Support**: Basic functionality without internet
+- **Battery Optimization**: Efficient background processing
+- **Memory Usage**: Optimized for devices with 2GB+ RAM
+
+## Monetization Strategy
+- **Coin Sales**: Primary revenue from coin purchases
+- **Premium Subscriptions**: VIP membership with coin bonuses
+- **Advertisements**: Optional video ads for bonus coins
+- **In-App Purchases**: Special packages and seasonal offers
+- **Transaction Fees**: Small percentage on coin conversions
+- **Sponsored Draws**: Brand partnerships for special events
+
+## Development Phases
+
+### Phase 1 (MVP - 5 weeks)
+- User authentication and basic profile
+- In-app wallet system with coin purchases
+- Simple draw participation flow using coins
+- Payment integration for coin purchases
+- Winner selection mechanism
+- Basic coin transaction history
+
+### Phase 2 (Enhanced Features - 4 weeks)
+- Advanced history and analytics
+- Push notifications
+- Social sharing with coin rewards
+- Improved UI animations
+- Video upload capability
+- Daily check-in and basic gamification
+
+### Phase 3 (Premium Features - 4 weeks)
+- Winners video feed with coin rewards
+- Advanced gamification (spin wheel, achievements)
+- Social features (friends, groups)
+- VIP membership system
+- Multi-language support
+- Performance optimizations and security enhancements
+
+## Testing Requirements
+- **Unit Tests**: Core business logic coverage
+- **Integration Tests**: Payment and API flows
+- **UI Tests**: Critical user journeys
+- **Performance Tests**: Load and stress testing
+- **Security Tests**: Penetration testing
+
+## Deployment & Infrastructure
+- **App Stores**: iOS App Store and Google Play Store
+- **Backend Hosting**: AWS or Google Cloud Platform
+- **CDN**: Global content delivery for media files
+- **Monitoring**: Application performance monitoring
+- **Backup Strategy**: Regular database backups
+
+---
+
+## Final Instructions for Replit AI
+
+Create a production-ready lucky draw application with the above specifications. Focus on:
+
+1. **Coin-Based Economy**: Seamless wallet integration with secure transactions
+2. **Modern, Premium Design**: Every screen should feel polished and engaging
+3. **Gamified Experience**: Rich rewards system to keep users engaged
+4. **Smooth User Experience**: Minimal friction in the participation flow
+5. **Robust Backend**: Secure, scalable architecture with real-time updates
+6. **Social Engagement**: Community features that drive user retention
+7. **Advanced Features**: AI-powered personalization and smart notifications
+8. **Mobile-First**: Optimized for mobile devices with offline capabilities
+9. **Security**: Enterprise-grade security for financial transactions
+
+**Important Notes:**
+- Admin panel is excluded from this development scope (separate project)
+- Focus on coin economy - all participation uses coins, not direct money
+- Implement real-time balance updates across the app
+- Include comprehensive gamification to increase user engagement
+- Ensure all social features reward users with coins
+- Build scalable architecture to handle high transaction volumes
+
+Start with the MVP phase focusing on core wallet functionality and basic draws. Ensure each feature is fully functional before moving to the next phase. Include proper error handling, loading states, and user feedback throughout the application.
+
+The final product should be a premium fintech-gaming hybrid that rivals apps like CRED in design quality while providing an engaging, rewarding experience that keeps users coming back daily.
