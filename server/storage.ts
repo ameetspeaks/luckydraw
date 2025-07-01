@@ -16,7 +16,7 @@ import {
   type InsertWinner,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
   // User operations - mandatory for Replit Auth
@@ -31,6 +31,7 @@ export interface IStorage {
   // Draw operations
   createDraw(draw: InsertDraw): Promise<Draw>;
   getAllActiveDraws(): Promise<Draw[]>;
+  getAllDraws(): Promise<Draw[]>;
   getDrawById(id: number): Promise<Draw | undefined>;
   updateDrawParticipants(drawId: number, count: number): Promise<Draw>;
   completeDraw(drawId: number, winnerId: string): Promise<Draw>;
@@ -162,6 +163,13 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(draws)
       .where(eq(draws.isActive, true));
+  }
+
+  async getAllDraws(): Promise<Draw[]> {
+    return await db
+      .select()
+      .from(draws)
+      .orderBy(desc(draws.createdAt));
   }
 
   async getDrawById(id: number): Promise<Draw | undefined> {

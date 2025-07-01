@@ -7,11 +7,12 @@ import { useAuth } from "@/hooks/useAuth";
 import Home from "@/pages/home";
 import Landing from "@/pages/landing";
 import Wallet from "@/pages/wallet";
-import Draws from "@/pages/draws";
+import Draws from "@/pages/draws-enhanced";
 import History from "@/pages/history";
 import Profile from "@/pages/profile";
 import Result from "@/pages/result";
 import Reels from "@/pages/reels";
+import Earn from "@/pages/earn";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -30,6 +31,7 @@ function Router() {
           <Route path="/profile" component={Profile} />
           <Route path="/results" component={Result} />
           <Route path="/reels" component={Reels} />
+          <Route path="/earn" component={Earn} />
         </>
       )}
       <Route component={NotFound} />

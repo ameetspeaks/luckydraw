@@ -1,29 +1,107 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import DrawCard from "@/components/draw-card";
 import BottomNavigation from "@/components/bottom-navigation";
-import { ArrowLeft, Clock, Trophy, Users } from "lucide-react";
+import { ArrowLeft, Clock, Trophy, Users, Calendar, Target, Gift, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function Draws() {
   const { user } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const [activeTab, setActiveTab] = useState("live");
+  const [currentPage, setCurrentPage] = useState(1);
+  const drawsPerPage = 5;
+  const queryClient = useQueryClient();
 
-  const { data: draws, isLoading } = useQuery({
-    queryKey: ["/api/draws"],
+  // Fetch all draws
+  const { data: allDraws = [], isLoading } = useQuery({
+    queryKey: ["/api/draws/all"],
+    queryFn: async () => {
+      const response = await fetch("/api/draws/all");
+      if (!response.ok) throw new Error("Failed to fetch draws");
+      return response.json();
+    },
     retry: false,
   });
 
-  const { data: participations } = useQuery({
+  // Fetch user participations
+  const { data: participations = [] } = useQuery({
     queryKey: ["/api/participations"],
     retry: false,
+  });
+
+  // Filter draws based on active tab
+  const getFilteredDraws = () => {
+    const now = new Date();
+    switch (activeTab) {
+      case "live":
+        return allDraws.filter((draw: any) => 
+          draw.isActive && new Date(draw.drawTime) > now
+        );
+      case "past":
+        return allDraws.filter((draw: any) => 
+          !draw.isActive || new Date(draw.drawTime) <= now
+        );
+      case "my":
+        const myDrawIds = participations.map((p: any) => p.drawId);
+        return allDraws.filter((draw: any) => 
+          myDrawIds.includes(draw.id)
+        );
+      default:
+        return [];
+    }
+  };
+
+  const filteredDraws = getFilteredDraws();
+  const totalPages = Math.ceil(filteredDraws.length / drawsPerPage);
+  const paginatedDraws = filteredDraws.slice(
+    (currentPage - 1) * drawsPerPage,
+    currentPage * drawsPerPage
+  );
+
+  // Participation mutation
+  const participateMutation = useMutation({
+    mutationFn: async ({ drawId, entryFee }: { drawId: number; entryFee: number }) => {
+      return apiRequest("POST", "/api/participations", {
+        drawId,
+        coinsSpent: entryFee,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/participations"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
+      toast({
+        title: "Success!",
+        description: "You've successfully joined the draw!",
+      });
+    },
+    onError: (error) => {
+      if (isUnauthorizedError(error as Error)) {
+        toast({
+          title: "Unauthorized",
+          description: "You are logged out. Logging in again...",
+          variant: "destructive",
+        });
+        setTimeout(() => {
+          window.location.href = "/api/login";
+        }, 500);
+        return;
+      }
+      toast({
+        title: "Error",
+        description: (error as Error).message || "Failed to join draw",
+        variant: "destructive",
+      });
+    },
   });
 
   const handleParticipate = async (drawId: number, entryFee: number) => {

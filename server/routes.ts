@@ -38,6 +38,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all draws (including inactive for past/history)
+  app.get('/api/draws/all', async (req, res) => {
+    try {
+      const draws = await storage.getAllDraws();
+      res.json(draws);
+    } catch (error) {
+      console.error("Error fetching all draws:", error);
+      res.status(500).json({ message: "Failed to fetch all draws" });
+    }
+  });
+
   app.get('/api/draws/:id', async (req, res) => {
     try {
       const drawId = parseInt(req.params.id);
@@ -167,6 +178,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error purchasing coins:", error);
       res.status(500).json({ message: "Failed to purchase coins" });
+    }
+  });
+
+  // Watch ad endpoint for earning coins
+  app.post('/api/watch-ad', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const adReward = 10; // 10 coins per ad
+
+      // Update user coins
+      await storage.updateUserCoins(userId, adReward);
+
+      // Create transaction record
+      await storage.createTransaction({
+        userId,
+        type: 'ad_watch',
+        amount: adReward,
+        description: 'Earned coins for watching advertisement',
+      });
+
+      res.json({ success: true, coins: adReward });
+    } catch (error) {
+      console.error("Error processing ad watch:", error);
+      res.status(500).json({ message: "Failed to process ad watch" });
+    }
+  });
+
+  // Social task completion
+  app.post('/api/social-task', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { taskId } = req.body;
+
+      const taskRewards = {
+        'share-app': 50,
+        'invite-friend': 100,
+        'rate-app': 75
+      };
+
+      const reward = taskRewards[taskId as keyof typeof taskRewards] || 25;
+
+      // Update user coins
+      await storage.updateUserCoins(userId, reward);
+
+      // Create transaction record
+      await storage.createTransaction({
+        userId,
+        type: 'social_task',
+        amount: reward,
+        description: `Completed social task: ${taskId}`,
+      });
+
+      res.json({ success: true, reward });
+    } catch (error) {
+      console.error("Error completing social task:", error);
+      res.status(500).json({ message: "Failed to complete social task" });
     }
   });
 

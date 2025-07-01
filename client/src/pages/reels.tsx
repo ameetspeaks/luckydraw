@@ -157,30 +157,32 @@ export default function Reels() {
       {/* Reels Container */}
       <div 
         ref={containerRef}
-        className="relative h-screen w-full"
-        style={{ transform: `translateY(-${currentReelIndex * 100}vh)`, transition: 'transform 0.3s ease' }}
+        className="relative h-screen w-full overflow-hidden"
       >
         {reels.map((reel: WinnerReel, index: number) => (
           <div 
             key={reel.id}
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ top: `${index * 100}vh` }}
+            className={`absolute inset-0 w-full h-full transition-transform duration-300 ease-out ${
+              index === currentReelIndex ? 'translate-y-0' : 
+              index < currentReelIndex ? '-translate-y-full' : 'translate-y-full'
+            }`}
           >
             {/* Background Video/Image */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60">
+            <div className="absolute inset-0 w-full h-full">
               <img 
                 src={reel.thumbnailUrl}
                 alt={`${reel.winnerName} celebration`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+              {/* Overlay gradients */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/50"></div>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent"></div>
             </div>
 
             {/* Content Overlay */}
             <div className="relative z-10 w-full h-full flex">
               {/* Left Side - Main Content */}
-              <div className="flex-1 flex flex-col justify-end p-6 pb-32">
+              <div className="flex-1 flex flex-col justify-end p-4 pb-24 max-w-[75%]">
                 {/* Winner Info */}
                 <div className="mb-4">
                   <div className="flex items-center mb-3">
@@ -224,7 +226,7 @@ export default function Reels() {
               </div>
 
               {/* Right Side - Actions */}
-              <div className="w-16 flex flex-col items-center justify-end pb-32 space-y-6">
+              <div className="w-16 flex flex-col items-center justify-end pb-24 space-y-4">
                 {/* Like Button */}
                 <button 
                   onClick={() => toggleLike(reel.id)}

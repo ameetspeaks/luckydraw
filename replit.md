@@ -98,10 +98,15 @@ The application is configured for deployment on Replit with:
 ## Changelog
 
 - July 01, 2025: Initial setup with database schema and authentication
-- July 01, 2025: Enhanced reels functionality with real winner data
+- July 01, 2025: Enhanced reels functionality with real winner data and TikTok-style UI
 - July 01, 2025: Added comprehensive documentation (SCHEMA.md, MIGRATION.md, README.md)
 - July 01, 2025: Implemented winner reels API endpoint with celebration content
 - July 01, 2025: Added database seeding with sample draws and winners
+- July 01, 2025: Created comprehensive coin earning system with multiple tasks
+- July 01, 2025: Enhanced draws page with Live/Past/My Draws navigation tabs
+- July 01, 2025: Added pagination (5 draws per page) and improved UX
+- July 01, 2025: Implemented watch ads, social tasks, and achievement systems
+- July 01, 2025: Updated bottom navigation with coin earning section
 
 ## User Preferences
 
