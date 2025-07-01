@@ -64,8 +64,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Participation routes
   app.post('/api/participations', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const { drawId, coinsSpent } = insertParticipationSchema.parse(req.body);
+      const userId = req.user?.claims?.sub;
+      const { drawId, coinsSpent } = req.body;
+      
+      // Debug logging
+      console.log("Participation request:", { userId, drawId, coinsSpent, userExists: !!req.user });
+      
+      if (!userId) {
+        return res.status(401).json({ message: "User not authenticated" });
+      }
+      
+      // Validate input manually since we add userId from auth context
+      if (!drawId || typeof drawId !== 'number') {
+        return res.status(400).json({ message: "Invalid draw ID" });
+      }
+      if (!coinsSpent || typeof coinsSpent !== 'number') {
+        return res.status(400).json({ message: "Invalid coins amount" });
+      }
       
       // Check if user has enough coins
       const user = await storage.getUser(userId);
